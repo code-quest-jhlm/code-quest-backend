@@ -47,6 +47,12 @@ $ docker-compose up
 $ npm install
 ```
 
+## Ejecutar las migraciones
+
+```bash
+$ npm run migrations:run
+```
+
 ## Ejecutar la aplicación
 
 ```bash

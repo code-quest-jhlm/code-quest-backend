@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common'
 import { Draw } from '../entity/draw.entity'
 import { DrawCRUDDTO } from '../dto/draw.dto'
-import { UserRepository } from 'src/application/user/repository/user.repository'
+import { UsersService } from '../../../core/user/service/user.service'
 import { RewardMapper } from 'src/application/reward/mapper/reward.mapper'
 
 @Injectable()
 export class DrawMapper {
   constructor(
-    private userRepository: UserRepository,
+    private userService: UsersService,
     private rewardMapper: RewardMapper
   ) {}
 
@@ -36,6 +36,6 @@ export class DrawMapper {
   }
 
   async getUser(id: string) {
-    return await this.userRepository.getUserById(id)
+    return await this.userService.findOne(id)
   }
 }

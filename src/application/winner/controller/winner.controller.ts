@@ -2,7 +2,10 @@ import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
 import { WinnerDTO } from '../dto/winner.dto'
 import { WinnerService } from '../service/winner.service'
 import { ApiTags, ApiOperation } from '@nestjs/swagger'
+import { Auth } from 'src/core/auth/decorators/auth.decorator'
+import { Role } from 'src/common/constants'
 
+@Auth(Role.USER)
 @Controller('/v1/winner')
 @ApiTags('Ganador')
 export class WinnerController {

@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 import { Auth } from './decorators/auth.decorator';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
-import { Role } from 'src/common/constants';
+import { Role } from '../../common/constants';
 
 interface RequestWithUser extends Request {
   user: {

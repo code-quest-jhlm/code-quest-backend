@@ -6,7 +6,7 @@ import {
   BeforeInsert,
 } from 'typeorm'
 import { DrawEnum } from '../enum/draw.enum'
-import { User } from '../../user/entity/user.entity'
+import { User } from '../../../core/user/entity/user.entity'
 
 @Entity({ name: 'draw', schema: process.env.DB_SCHEMA })
 export class Draw {

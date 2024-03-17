@@ -1,4 +1,4 @@
-import { Role } from 'src/common/constants';
+import { Role } from '../../../common/constants'
 import {
   Column,
   DeleteDateColumn,
@@ -9,7 +9,7 @@ import {
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Column()
   name: string;

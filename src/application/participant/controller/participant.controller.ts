@@ -2,7 +2,10 @@ import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
 import { ParticipantDTO } from '../dto/participant.dto'
 import { ParticipantService } from '../service/participant.service'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
+import { Auth } from 'src/core/auth/decorators/auth.decorator'
+import { Role } from 'src/common/constants'
 
+@Auth(Role.USER)
 @Controller('/v1/participant')
 @ApiTags('Partipantes')
 export class ParticipantController {

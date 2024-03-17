@@ -5,16 +5,16 @@ import { DrawController } from './controller/draw.controller'
 import { DrawService } from './service/draw.service'
 import { DrawMapper } from './mapper/draw.mapper'
 import { DrawRepository } from './repository/draw.repository'
-import { UserModule } from '../user/user.module'
 import { RewardModule } from '../reward/reward.module'
 import { DrawRewardModule } from '../drawReward/drawReward.module'
+import { UsersModule } from 'src/core/user/user.module'
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Draw]),
-    UserModule,
     RewardModule,
     DrawRewardModule,
+    UsersModule,
   ],
   controllers: [DrawController],
   providers: [DrawService, DrawMapper, DrawRepository],

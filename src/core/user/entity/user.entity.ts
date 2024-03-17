@@ -6,10 +6,10 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm'
 
-@Entity()
+@Entity({ name: 'user', schema: process.env.DB_SCHEMA })
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id: string
 
   @Column()
   name: string

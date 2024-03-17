@@ -14,7 +14,7 @@ export class User {
   @Column()
   name: string
 
-  @Column({ unique: true, nullable: false })
+  @Column({ unique: true })
   userId: string
 
   @Column({ unique: true, nullable: false })

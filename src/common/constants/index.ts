@@ -15,3 +15,8 @@ export enum Order {
   ASC = 'ASC',
   DESC = 'DESC',
 }
+
+export enum Role {
+  USER = 'user',
+  ADMIN = 'admin',
+}

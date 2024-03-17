@@ -14,6 +14,7 @@ export class ParticipantService {
   async getAllParticipantByDraw(idDraw: string): Promise<ParticipantDTO[]> {
     const participant: Participant[] =
       await this.participantRepository.getAllParticipantByDraw(idDraw)
+    console.log(participant)
     return participant.map((participantE) =>
       this.mapper.entityToDto(participantE)
     )
@@ -39,12 +40,19 @@ export class ParticipantService {
       participant = await this.participantRepository.createParticipant(
         await this.mapper.dtoToEntity(dto)
       )
+      return {
+        finalizado: true,
+        mensaje: 'Operacion Exitosa',
+        datos: participant,
+      }
+    } else {
+      return {
+        finalizado: true,
+        mensaje: 'Usuario ya registrado',
+        datos: participant,
+      }
     }
-    return {
-      finalizado: true,
-      mensaje: 'Operacion Exitosa',
-      datos: participant,
-    }
+    
   }
 
   async deleteParticipant(id: string): Promise<void> {

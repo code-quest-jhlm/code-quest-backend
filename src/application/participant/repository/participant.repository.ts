@@ -13,6 +13,7 @@ export class ParticipantRepository {
   async getAllParticipantByDraw(idDraw: string): Promise<Participant[]> {
     return this.participantRepository.find({
       where: { id_draw: Equal(idDraw) },
+      loadRelationIds: true,
     })
   }
 

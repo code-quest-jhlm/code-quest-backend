@@ -1,7 +1,9 @@
 import { DataSource } from 'typeorm'
-import dotenv from 'dotenv'
+import { config } from 'dotenv'
 
-dotenv.config()
+config({
+  path: '.env',
+})
 
 const AppDataSource = new DataSource({
   type: 'postgres',
@@ -14,7 +16,7 @@ const AppDataSource = new DataSource({
   synchronize: false,
   logging: true,
   entities: ['src/**/*.entity.ts'],
-  migrations: ['database/migrations/*.ts'],
+  migrations: ['src/database/migrations/*.ts'],
 })
 
 export default AppDataSource

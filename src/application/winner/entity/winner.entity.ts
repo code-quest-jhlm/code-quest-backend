@@ -1,14 +1,10 @@
-import Draw from 'src/application/draw/entity/draw.entity'
-import { Reward } from 'src/application/reward/entity/reward.entity'
+import { Draw } from '../../draw/entity/draw.entity'
+import { Reward } from '../../reward/entity/reward.entity'
 import { Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 
-@Entity({ name: 'winners', schema: process.env.DB_SCHEMA_DRAW_APPLICATION })
+@Entity({ name: 'winners' })
 export default class Winner {
-  @PrimaryGeneratedColumn({
-    type: 'bigint',
-    name: 'id',
-    comment: 'Clave primaria de la tabla ganadores',
-  })
+  @PrimaryGeneratedColumn('uuid')
   id: string
 
   @ManyToOne(() => Draw, (drawEntity) => drawEntity.id)

@@ -4,40 +4,42 @@ import {
   JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
+  ManyToOne,
 } from 'typeorm'
 import { DrawEnum } from '../enum/draw.enum'
-import { Reward } from 'src/application/reward/entity/reward.entity'
+import { Reward } from '../../reward/entity/reward.entity'
+import { User } from '../../user/entity/user.entity'
 
-@Entity({ name: 'draw', schema: process.env.DB_SCHEMA_DRAW_APPLICATION })
-export default class Draw {
+@Entity({ name: 'draw', schema: process.env.DB_SCHEMA })
+export class Draw {
   @PrimaryGeneratedColumn('uuid')
-  readonly id: string
+  id: string
 
   @Column({
     length: 150,
     type: 'varchar',
     comment: 'Titulo del sorteo',
   })
-  readonly title: string
+  title: string
 
   @Column({
     length: 350,
     type: 'varchar',
     comment: 'Descripción del sorteo',
   })
-  readonly description: string
+  description: string
 
   @Column({
     name: 'creation_date',
     type: 'date',
   })
-  readonly creationDate: Date
+  creationDate: Date
 
   @Column({
     name: 'draw_date',
     type: 'date',
   })
-  readonly drawDate: Date
+  drawDate: Date
 
   @ManyToMany(() => Reward, (reward) => reward.draws)
   @JoinTable({
@@ -59,10 +61,13 @@ export default class Draw {
     enum: DrawEnum,
     default: DrawEnum.ACTIVO,
   })
-  readonly state: string
+  state: string
 
   @Column({
     name: 'id_server',
   })
-  readonly idServer: string
+  idServer: string
+
+  @ManyToOne(() => User, (userEntity) => userEntity.id)
+  id_user: User
 }

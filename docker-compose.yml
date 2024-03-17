@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: db-code-quest
+    environment:
+      POSTGRES_DB: codequest_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres-network-quest
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin-db-quest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    networks:
+      - postgres-network-quest
+    depends_on:
+      - postgres
+
+networks:
+  postgres-network-quest:
+    driver: bridge

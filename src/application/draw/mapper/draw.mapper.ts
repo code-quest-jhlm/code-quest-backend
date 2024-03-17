@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { Draw } from '../entity/draw.entity'
 import { DrawCRUDDTO } from '../dto/draw.dto'
-import { UserRepository } from 'src/application/user/repository/user.repository'
+import { UserRepository } from '../../../core/user/repository/user.repository'
 
 @Injectable()
 export class DrawMapper {
@@ -12,8 +12,8 @@ export class DrawMapper {
     drawEntity.id = drawDTO.id
     drawEntity.title = drawDTO.title
     drawEntity.description = drawDTO.description
-    drawEntity.creationDate = drawDTO.creationDate
-    drawEntity.drawDate = drawDTO.drawDate
+    drawEntity.creationDate = drawDTO.creationDate || new Date()
+    drawEntity.drawDate = drawDTO.drawDate || new Date()
     drawEntity.idServer = drawDTO.idServer
     drawEntity.id_user = await this.getUser(drawDTO.idUser)
     return drawEntity
@@ -32,7 +32,7 @@ export class DrawMapper {
     )
   }
 
-  async getUser(id: string) {
+  async getUser(id: number) {
     return await this.userRepository.getUserById(id)
   }
 }

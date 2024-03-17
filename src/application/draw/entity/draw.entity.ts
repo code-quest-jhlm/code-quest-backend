@@ -8,7 +8,7 @@ import {
 } from 'typeorm'
 import { DrawEnum } from '../enum/draw.enum'
 import { Reward } from '../../reward/entity/reward.entity'
-import { User } from '../../user/entity/user.entity'
+import { User } from '../../../core/user/entity/user.entity'
 
 @Entity({ name: 'draw', schema: process.env.DB_SCHEMA })
 export class Draw {
@@ -32,6 +32,7 @@ export class Draw {
   @Column({
     name: 'creation_date',
     type: 'date',
+    default: new Date(),
   })
   creationDate: Date
 

@@ -4,13 +4,16 @@ import { AppService } from './app.service'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { CoreModule } from './core/core.module'
+import { ApplicationModule } from './application/application.module'
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env',
-    }),CoreModule,
+    }),
+    CoreModule,
+    ApplicationModule,
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule,CoreModule],
+      imports: [ConfigModule, CoreModule],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.get('DB_HOST'),

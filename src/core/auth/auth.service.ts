@@ -37,8 +37,8 @@ export class AuthService {
     }
   }
 
-  async login({ userName, password }: LoginDto) {
-    const user = await this.usersService.findByUserNameWithPassword(userName)
+  async login({ username, password }: LoginDto) {
+    const user = await this.usersService.findByUserNameWithPassword(username)
     if (!user) {
       throw new UnauthorizedException('username is wrong')
     }

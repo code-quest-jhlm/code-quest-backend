@@ -8,7 +8,7 @@ import { CoreModule } from './core/core.module'
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env',
-    }),
+    }),CoreModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule,CoreModule],
       useFactory: (configService: ConfigService) => ({
@@ -20,6 +20,7 @@ import { CoreModule } from './core/core.module'
         database: configService.get('DB_DATABASE'),
         schema: configService.get('DB_SCHEMA'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        synchronize: true,
       }),
       inject: [ConfigService],
     }),

@@ -14,7 +14,6 @@ export class DrawMapper {
     drawEntity.description = drawDTO.description
     drawEntity.creationDate = drawDTO.creationDate || new Date()
     drawEntity.drawDate = drawDTO.drawDate || new Date()
-    drawEntity.idServer = drawDTO.idServer
     drawEntity.id_user = await this.getUser(drawDTO.idUser)
     return drawEntity
   }
@@ -27,8 +26,7 @@ export class DrawMapper {
       drawEntity.creationDate,
       drawEntity.drawDate,
       drawEntity.state,
-      drawEntity.id_user.id,
-      drawEntity.idServer
+      drawEntity.id_user.id
     )
   }
 

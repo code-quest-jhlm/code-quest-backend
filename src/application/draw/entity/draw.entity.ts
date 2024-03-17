@@ -64,11 +64,6 @@ export class Draw {
   })
   state: string
 
-  @Column({
-    name: 'id_server',
-  })
-  idServer: string
-
   @ManyToOne(() => User, (userEntity) => userEntity.id)
   id_user: User
 }

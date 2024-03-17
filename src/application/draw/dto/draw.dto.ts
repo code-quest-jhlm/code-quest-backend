@@ -58,10 +58,6 @@ export class DrawCRUDDTO {
   @IsNumber()
   readonly idUser: number
 
-  @ApiProperty()
-  @IsString()
-  readonly idServer: string
-
   constructor(
     id: string,
     title: string,
@@ -69,8 +65,7 @@ export class DrawCRUDDTO {
     creationDate: Date,
     drawDate: Date,
     state: string,
-    idUser: number,
-    idServer: string
+    idUser: number
   ) {
     this.id = id
     this.title = title
@@ -79,6 +74,5 @@ export class DrawCRUDDTO {
     this.description = description
     this.creationDate = creationDate
     this.idUser = idUser
-    this.idServer = idServer
   }
 }

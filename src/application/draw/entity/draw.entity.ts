@@ -6,6 +6,7 @@ import {
   BeforeInsert,
 } from 'typeorm'
 import { DrawEnum } from '../enum/draw.enum'
+import { Reward } from '../../reward/entity/reward.entity'
 import { User } from '../../../core/user/entity/user.entity'
 
 @Entity({ name: 'draw', schema: process.env.DB_SCHEMA })
@@ -30,6 +31,7 @@ export class Draw {
   @Column({
     name: 'creation_date',
     type: 'date',
+    default: new Date(),
   })
   creationDate: Date
 
@@ -46,11 +48,6 @@ export class Draw {
     default: DrawEnum.ACTIVO,
   })
   state: string
-
-  @Column({
-    name: 'id_server',
-  })
-  idServer: string
 
   @ManyToOne(() => User, (userEntity) => userEntity.id)
   id_user: User

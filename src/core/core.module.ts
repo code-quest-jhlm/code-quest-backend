@@ -4,10 +4,6 @@ import { AuthModule } from './auth/auth.module'
 import { DiscordModule } from './discord/discord.module'
 
 @Module({
-  imports: [
-    UsersModule,
-    AuthModule,
-    DiscordModule,
-  ],
+  imports: [UsersModule, AuthModule, DiscordModule],
 })
 export class CoreModule {}

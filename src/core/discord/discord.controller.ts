@@ -77,7 +77,16 @@ export class DiscordController {
         Authorization: `Bearer ${token}`,
       },
     })
+    const servers = await axios.get(
+        'https://discord.com/api/users/@me/guilds',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
     console.log('data', response.data)
+    console.log('servers', servers.data)
     console.log('refresh_token', this.refreshToken)
     res.send(`Welcome ${response.data.username}!`)
   }

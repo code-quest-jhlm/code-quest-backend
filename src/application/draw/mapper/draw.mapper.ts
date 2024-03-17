@@ -1,14 +1,16 @@
 import { Injectable } from '@nestjs/common'
 import { Draw } from '../entity/draw.entity'
 import { DrawCRUDDTO } from '../dto/draw.dto'
-import { UsersService } from '../../../core/user/service/user.service'
+import { UserRepository } from '../../../core/user/repository/user.repository'
+import { UsersService } from 'src/core/user/service/user.service'
 import { RewardMapper } from 'src/application/reward/mapper/reward.mapper'
 
 @Injectable()
 export class DrawMapper {
   constructor(
     private userService: UsersService,
-    private rewardMapper: RewardMapper
+    private rewardMapper: RewardMapper,
+    private userRepository: UserRepository
   ) {}
 
   async dtoToEntity(drawDTO: DrawCRUDDTO): Promise<Draw> {
@@ -16,9 +18,8 @@ export class DrawMapper {
     drawEntity.id = drawDTO.id
     drawEntity.title = drawDTO.title
     drawEntity.description = drawDTO.description
-    drawEntity.creationDate = drawDTO.creationDate
-    drawEntity.drawDate = drawDTO.drawDate
-    drawEntity.idServer = drawDTO.idServer
+    drawEntity.creationDate = drawDTO.creationDate || new Date()
+    drawEntity.drawDate = drawDTO.drawDate || new Date()
     drawEntity.id_user = await this.getUser(drawDTO.idUser)
     return drawEntity
   }
@@ -31,11 +32,11 @@ export class DrawMapper {
       drawEntity.creationDate,
       drawEntity.drawDate,
       drawEntity.state,
-      drawEntity.idServer
+      drawEntity.id_user.id
     )
   }
 
   async getUser(id: string) {
-    return await this.userService.findOne(id)
+    return await this.userRepository.getUserById(id)
   }
 }

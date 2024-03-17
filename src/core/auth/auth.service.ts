@@ -2,61 +2,61 @@ import {
   BadRequestException,
   Injectable,
   UnauthorizedException,
-} from '@nestjs/common';
-import { RegisterDto } from './dto/register.dto';
+} from '@nestjs/common'
+import { RegisterDto } from './dto/register.dto'
 
-import { JwtService } from '@nestjs/jwt';
-import * as bcryptjs from 'bcryptjs';
-import { LoginDto } from './dto/login.dto';
-import { UsersService } from '../user/service/user.service';
+import { JwtService } from '@nestjs/jwt'
+import * as bcryptjs from 'bcryptjs'
+import { LoginDto } from './dto/login.dto'
+import { UsersService } from '../user/service/user.service'
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
-    private readonly jwtService: JwtService,
+    private readonly jwtService: JwtService
   ) {}
 
-  async register({ name, email, password }: RegisterDto) {
-    const user = await this.usersService.findOneByEmail(email);
+  async register({ name, userId, email, password }: RegisterDto) {
+    const user = await this.usersService.findOneByEmail(email)
 
     if (user) {
-      throw new BadRequestException('User already exists');
+      throw new BadRequestException('User already exists')
     }
 
     await this.usersService.create({
       name,
+      userId,
       email,
       password: await bcryptjs.hash(password, 10),
-    });
+    })
 
     return {
       name,
       email,
-    };
+    }
   }
 
-  async login({ email, password }: LoginDto) {
-    const user = await this.usersService.findByEmailWithPassword(email);
+  async login({ userName, password }: LoginDto) {
+    const user = await this.usersService.findByUserNameWithPassword(userName)
     if (!user) {
-      throw new UnauthorizedException('email is wrong');
+      throw new UnauthorizedException('username is wrong')
     }
 
-    const isPasswordValid = await bcryptjs.compare(password, user.password);
+    const isPasswordValid = await bcryptjs.compare(password, user.password)
     if (!isPasswordValid) {
-      throw new UnauthorizedException('password is wrong');
+      throw new UnauthorizedException('password is wrong')
     }
 
-    const payload = { email: user.email, role: user.role };
-    const token = await this.jwtService.signAsync(payload);
+    const payload = { email: user.email, role: user.role }
+    const token = await this.jwtService.signAsync(payload)
 
     return {
       token,
-      email,
-    };
+    }
   }
 
   async profile({ email, role }: { email: string; role: string }) {
-    return await this.usersService.findOneByEmail(email);
+    return await this.usersService.findOneByEmail(email)
   }
 }

@@ -1,18 +1,18 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { Request } from 'express';
-import { ActiveUser } from 'src/common/decorators/active-user.decorator';
-import { UserActiveInterface } from 'src/common/interfaces/user-active.interface';
-import { AuthService } from './auth.service';
-import { Auth } from './decorators/auth.decorator';
-import { LoginDto } from './dto/login.dto';
-import { RegisterDto } from './dto/register.dto';
-import { Role } from 'src/common/constants';
+import { Body, Controller, Get, Post } from '@nestjs/common'
+import { Request } from 'express'
+import { ActiveUser } from 'src/common/decorators/active-user.decorator'
+import { UserActiveInterface } from 'src/common/interfaces/user-active.interface'
+import { AuthService } from './auth.service'
+import { Auth } from './decorators/auth.decorator'
+import { LoginDto } from './dto/login.dto'
+import { RegisterDto } from './dto/register.dto'
+import { Role } from 'src/common/constants'
 
 interface RequestWithUser extends Request {
   user: {
-    email: string;
-    role: string;
-  };
+    email: string
+    role: string
+  }
 }
 
 @Controller('auth')
@@ -22,23 +22,23 @@ export class AuthController {
   @Post('register')
   register(
     @Body()
-    registerDto: RegisterDto,
+    registerDto: RegisterDto
   ) {
-    return this.authService.register(registerDto);
+    return this.authService.register(registerDto)
   }
 
   @Post('login')
   login(
     @Body()
-    loginDto: LoginDto,
+    loginDto: LoginDto
   ) {
-    return this.authService.login(loginDto);
+    return this.authService.login(loginDto)
   }
 
   @Get('profile')
   @Auth(Role.USER)
   profile(@ActiveUser() user: UserActiveInterface) {
     console.log(user)
-    return this.authService.profile(user);
+    return this.authService.profile(user)
   }
 }

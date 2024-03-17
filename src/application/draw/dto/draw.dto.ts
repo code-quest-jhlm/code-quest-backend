@@ -1,5 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsDate, IsOptional, IsString, IsUUID } from 'class-validator'
+import {
+  IsDate,
+  IsOptional,
+  IsString,
+  IsUUID,
+  IsDateString,
+  IsArray,
+} from 'class-validator'
+import { RewardDTO } from 'src/application/reward/dto/reward.dto'
+import { Reward } from 'src/application/reward/entity/reward.entity'
 
 export class DrawDTO {
   @ApiProperty()
@@ -42,23 +51,29 @@ export class DrawCRUDDTO {
 
   @ApiProperty()
   @IsDate()
-  readonly creationDate: Date
+  @IsOptional()
+  readonly creationDate?: Date
 
   @ApiProperty()
-  @IsDate()
+  @IsDateString()
   readonly drawDate: Date
 
   @ApiProperty()
   @IsString()
-  readonly state: string
+  @IsOptional()
+  state?: string
 
   @ApiProperty()
   @IsUUID()
-  readonly idUser: string
+  readonly idUser?: string
 
   @ApiProperty()
   @IsString()
   readonly idServer: string
+
+  @ApiProperty()
+  @IsArray()
+  rewards?: RewardDTO[]
 
   constructor(
     id: string,
@@ -67,7 +82,6 @@ export class DrawCRUDDTO {
     creationDate: Date,
     drawDate: Date,
     state: string,
-    idUser: string,
     idServer: string
   ) {
     this.id = id
@@ -76,7 +90,6 @@ export class DrawCRUDDTO {
     this.state = state
     this.description = description
     this.creationDate = creationDate
-    this.idUser = idUser
     this.idServer = idServer
   }
 }

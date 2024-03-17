@@ -1,12 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
 import { ParticipantDTO } from '../dto/participant.dto'
 import { ParticipantService } from '../service/participant.service'
+import { ApiOperation, ApiTags } from '@nestjs/swagger'
 
 @Controller('/v1/participant')
+@ApiTags('Partipantes')
 export class ParticipantController {
   constructor(private participantService: ParticipantService) {}
 
-  @Get()
+  @Get('/draw/:idDraw')
+  @ApiOperation({ summary: 'Obtener todos los participantes de un sorteo' })
   async getAllParticipantByDraw(
     @Param('idDraw') idDraw: string
   ): Promise<ParticipantDTO[]> {
@@ -14,19 +17,20 @@ export class ParticipantController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Obtener participante por id' })
   async getParticipantById(@Param('id') id: string): Promise<ParticipantDTO> {
     return await this.participantService.getParticipantById(id)
   }
 
   @Post()
-  async createParticipant(
-    @Body() participant: ParticipantDTO
-  ): Promise<ParticipantDTO> {
+  @ApiOperation({ summary: 'Registrar participante en el sorteo' })
+  async registerParticipant(@Body() participant: ParticipantDTO) {
     return await this.participantService.registerParticipant(participant)
   }
 
   @Delete(':id')
-  async deleteUser(@Param('id') id: string): Promise<void> {
+  @ApiOperation({ summary: 'Eliminar a participante del sorteo' })
+  async deleteParticipant(@Param('id') id: string): Promise<void> {
     return await this.participantService.deleteParticipant(id)
   }
 }

@@ -2,10 +2,14 @@ import { Injectable } from '@nestjs/common'
 import { Draw } from '../entity/draw.entity'
 import { DrawCRUDDTO } from '../dto/draw.dto'
 import { UserRepository } from 'src/application/user/repository/user.repository'
+import { RewardMapper } from 'src/application/reward/mapper/reward.mapper'
 
 @Injectable()
 export class DrawMapper {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private rewardMapper: RewardMapper
+  ) {}
 
   async dtoToEntity(drawDTO: DrawCRUDDTO): Promise<Draw> {
     const drawEntity = new Draw()
@@ -27,7 +31,6 @@ export class DrawMapper {
       drawEntity.creationDate,
       drawEntity.drawDate,
       drawEntity.state,
-      drawEntity.id_user.id,
       drawEntity.idServer
     )
   }

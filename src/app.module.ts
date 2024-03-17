@@ -3,6 +3,7 @@ import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { ApplicationModule } from './application/application.module'
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -22,6 +23,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
       }),
       inject: [ConfigService],
     }),
+    ApplicationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

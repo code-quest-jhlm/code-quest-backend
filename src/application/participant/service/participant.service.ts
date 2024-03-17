@@ -30,11 +30,21 @@ export class ParticipantService {
   }
 
   async registerParticipant(dto: ParticipantDTO) {
-    const participant: Participant =
-      await this.participantRepository.createParticipant(
+    const list = await this.participantRepository.getAllParticipantByDraw(
+      dto.idDraw
+    )
+    const exist = list.find((p) => dto.idDiscord == p.id_discord)
+    let participant = null
+    if (!exist) {
+      participant = await this.participantRepository.createParticipant(
         await this.mapper.dtoToEntity(dto)
       )
-    return this.mapper.entityToDto(participant)
+    }
+    return {
+      finalizado: true,
+      mensaje: 'Operacion Exitosa',
+      datos: participant,
+    }
   }
 
   async deleteParticipant(id: string): Promise<void> {

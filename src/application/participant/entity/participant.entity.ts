@@ -11,11 +11,9 @@ export class Participant {
   full_name: string
 
   @Column({
-    length: 255,
-    type: 'varchar',
-    comment: 'Id de participante de discord',
+    type: 'bigint',
   })
-  id_discord: string
+  id_discord: number
 
   @ManyToOne(() => Draw, (drawEntity) => drawEntity.id)
   id_draw: Draw

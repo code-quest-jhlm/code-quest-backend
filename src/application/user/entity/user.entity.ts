@@ -8,6 +8,6 @@ export class User {
   @Column({ length: 255, type: 'varchar', comment: 'Nombre del usuario' })
   full_name: string
 
-  @Column({ length: 255, type: 'varchar', comment: 'Id de usuario de discord' })
-  id_discord: string
+  @Column({ type: 'bigint', comment: 'Id de usuario de discord' })
+  id_discord: number
 }

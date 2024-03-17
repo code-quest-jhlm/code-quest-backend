@@ -1,28 +1,28 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNumber, IsOptional, IsString, IsUUID } from 'class-validator'
+import { IsOptional, IsUUID, IsNumber } from 'class-validator'
 
-export class ParticipantDTO {
+export class WinnerDTO {
   @ApiProperty()
   @IsUUID()
   @IsOptional()
   readonly id?: string
 
   @ApiProperty()
-  @IsString()
-  readonly fullName: string
-
-  @ApiProperty()
   @IsNumber()
   readonly idDiscord: number
 
   @ApiProperty()
-  @IsString()
+  @IsUUID()
   readonly idDraw: string
 
-  constructor(id: string, fullName: string, idDiscord: number, idDraw: string) {
+  @ApiProperty()
+  @IsUUID()
+  readonly idReward: string
+
+  constructor(id: string, idDiscord: number, idDraw: string, idReward: string) {
     this.id = id
-    this.fullName = fullName
     this.idDiscord = idDiscord
     this.idDraw = idDraw
+    this.idReward = idReward
   }
 }

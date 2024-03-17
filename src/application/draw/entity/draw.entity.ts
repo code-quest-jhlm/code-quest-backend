@@ -1,10 +1,9 @@
 import {
   Column,
   Entity,
-  JoinTable,
-  ManyToMany,
   PrimaryGeneratedColumn,
   ManyToOne,
+  BeforeInsert,
 } from 'typeorm'
 import { DrawEnum } from '../enum/draw.enum'
 import { Reward } from '../../reward/entity/reward.entity'
@@ -42,20 +41,6 @@ export class Draw {
   })
   drawDate: Date
 
-  @ManyToMany(() => Reward, (reward) => reward.draws)
-  @JoinTable({
-    name: 'draw_reward',
-    joinColumn: {
-      name: 'draw_id',
-      referencedColumnName: 'id',
-    },
-    inverseJoinColumn: {
-      name: 'reward_id',
-      referencedColumnName: 'id',
-    },
-  })
-  rewards: Reward[]
-
   @Column({
     name: 'state',
     type: 'enum',
@@ -66,4 +51,9 @@ export class Draw {
 
   @ManyToOne(() => User, (userEntity) => userEntity.id)
   id_user: User
+
+  @BeforeInsert()
+  beforeInsert() {
+    this.creationDate = new Date()
+  }
 }

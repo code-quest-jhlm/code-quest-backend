@@ -10,7 +10,6 @@ export class ParticipantsController {
   constructor(private readonly participantsService: ParticipantsService) {}
 
   @Post()
-  @Auth(ValidRoles.superUser, ValidRoles.admin)
   create(@Body() createParticipantDto: CreateParticipantDto) {
     return this.participantsService.create(createParticipantDto);
   }
@@ -22,7 +21,6 @@ export class ParticipantsController {
   }
 
   @Get('draw/:id')
-  @Auth(ValidRoles.superUser, ValidRoles.admin)
   findByDraw(@Param('id') id: string) {
     return this.participantsService.findByDraw(id);
   }

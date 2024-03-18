@@ -10,10 +10,15 @@ import { SeedModule } from './seed/seed.module';
 import { AuthModule } from './auth/auth.module';
 import { DrawModule } from './draw/draw.module';
 import { ParticipantsModule } from './participants/participants.module';
+import { DiscordController } from './discord/discord.controller';
+import { DiscordModule } from './discord/discord.module';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+
+    HttpModule,
 
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -40,6 +45,9 @@ import { ParticipantsModule } from './participants/participants.module';
 
     ParticipantsModule,
 
+    DiscordModule,
+
   ],
+  controllers: [DiscordController],
 })
 export class AppModule {}

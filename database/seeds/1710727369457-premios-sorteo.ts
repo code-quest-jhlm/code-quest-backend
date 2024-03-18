@@ -12,8 +12,8 @@ export class PremiosSorteo1710727369457 implements MigrationInterface {
             sorteos.forEach(sorteo => {
                 rewards.forEach(reward => {
                     const newReward = new DrawReward();
-                    newReward.id_draw = reward as Draw;
-                    newReward.id_reward = sorteo as Reward;
+                    newReward.idDraw = sorteo.id;
+                    newReward.idReward = reward.id;
                     queryRunner.manager.save(newReward);
                 });
             });

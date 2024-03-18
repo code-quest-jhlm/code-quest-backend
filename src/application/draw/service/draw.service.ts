@@ -58,6 +58,8 @@ export class DrawService {
             this.drawRewardRepository.createDraw({
               id_draw: draw,
               id_reward: rewardE,
+              idReward: draw.id,
+              idDraw: reward.id,
             })
           }
         } else {
@@ -68,6 +70,8 @@ export class DrawService {
             this.drawRewardRepository.createDraw({
               id_draw: draw,
               id_reward: newReward,
+              idReward: draw.id,
+              idDraw: reward.id,
             })
           }
         }

@@ -1,9 +1,19 @@
-import { Controller, Get, Param, Post, Req, Res } from '@nestjs/common'
+import {
+  Controller,
+  Get,
+  Param,
+  PreconditionFailedException,
+  Req,
+  Res,
+} from '@nestjs/common'
 import { Request, Response } from 'express'
 import axios from 'axios'
+import { ParticipantService } from 'src/application/participant/service/participant.service'
 
 @Controller('discord')
 export class DiscordController {
+  constructor(
+    private participantServicio: ParticipantService){}
   private refreshToken: string
 
   @Get('login/:id')
@@ -71,7 +81,11 @@ export class DiscordController {
   }
 
   @Get('welcome/sorteo/:id')
-  async welcome(@Req() req: Request, @Res() res: Response, @Param('id') id: string) {
+  async welcome(
+    @Req() req: Request,
+    @Res() res: Response,
+    @Param('id') id: string
+  ) {
     const token = req.query.token
     const response = await axios.get('https://discord.com/api/users/@me', {
       headers: {
@@ -79,16 +93,31 @@ export class DiscordController {
       },
     })
     const servers = await axios.get(
-        'https://discord.com/api/users/@me/guilds',
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      'https://discord.com/api/users/@me/guilds',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
     console.log('data', response.data)
     console.log('servers', servers.data)
     console.log('refresh_token', this.refreshToken)
+    console.log(process.env.SERVER_DISCORD_ID)
+    const serverExist = servers.data.find(
+      (server) => server.id === process.env.SERVER_DISCORD_ID
+    )
+    if (serverExist) {
+      await this.participantServicio.registerParticipant({
+        fullName: response.data.username,
+        idDiscord: response.data.id,
+        idDraw: id
+      })
+    } else {
+      throw new PreconditionFailedException(
+        'No puedes participar si no estas en el servidor de DevTalles'
+      )
+    }
     res.send(`Welcome ${response.data.username} sorteo: ${id}!`)
   }
   //Solo para obtener los servidores de fomra separada

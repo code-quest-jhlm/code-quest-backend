@@ -4,18 +4,11 @@ import {
   IsOptional,
   IsString,
   IsUUID,
-<<<<<<< HEAD
-=======
-  IsNumber,
->>>>>>> 55a353a9563452495255927019c276e0339af4f2
   IsDateString,
   IsArray,
 } from 'class-validator'
 import { RewardDTO } from 'src/application/reward/dto/reward.dto'
-<<<<<<< HEAD
 import { Reward } from 'src/application/reward/entity/reward.entity'
-=======
->>>>>>> 55a353a9563452495255927019c276e0339af4f2
 
 export class DrawDTO {
   @ApiProperty()
@@ -71,7 +64,7 @@ export class DrawCRUDDTO {
   state?: string
 
   @ApiProperty()
-  readonly idUser?: number
+  readonly idUser?: string
 
   @ApiProperty()
   @IsArray()

@@ -4,7 +4,7 @@ import { Draw } from '../../draw/entity/draw.entity'
 
 @Entity({ name: 'draw_reward', schema: process.env.DB_SCHEMA })
 export class DrawReward {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id?: string
 
   @ManyToOne(() => Draw, (drawEntity) => drawEntity.id)

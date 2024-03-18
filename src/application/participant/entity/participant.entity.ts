@@ -4,7 +4,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm'
 
 @Entity({ name: 'participants' })
 export class Participant {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: string
 
   @Column({ length: 255, type: 'varchar', comment: 'Nombre del participante' })

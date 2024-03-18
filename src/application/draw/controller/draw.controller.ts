@@ -6,7 +6,6 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger'
 import { Auth } from 'src/core/auth/decorators/auth.decorator'
 import { Role } from 'src/common/constants'
 
-@Auth(Role.ADMIN)
 @Controller('/v1/draw')
 @ApiTags('Sorteos')
 export class DrawController {

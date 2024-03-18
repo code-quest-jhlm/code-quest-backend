@@ -8,7 +8,7 @@ import {
 
 @Entity({ name: 'user', schema: process.env.DB_SCHEMA })
 export class User {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: string
 
   @Column()

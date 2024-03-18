@@ -4,7 +4,7 @@ import { Entity, ManyToOne, PrimaryGeneratedColumn, Column } from 'typeorm'
 
 @Entity({ name: 'winners' })
 export class Winner {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: string
 
   @Column({ type: 'bigint', comment: 'Id de discord del participante ganador' })

@@ -3,6 +3,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   ManyToOne,
+  JoinColumn,
   BeforeInsert,
 } from 'typeorm'
 import { DrawEnum } from '../enum/draw.enum'
@@ -10,7 +11,13 @@ import { User } from '../../../core/user/entity/user.entity'
 
 @Entity({ name: 'draw', schema: process.env.DB_SCHEMA })
 export class Draw {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn(
+    {
+      type: 'bigint',
+      name: 'id',
+      comment: 'Clave primaria de la tabla Usuario',
+    }
+  )
   id: string
 
   @Column({
@@ -52,10 +59,13 @@ export class Draw {
     name: 'id_user'
   })
   idUser: string
-
+  
+  @JoinColumn({name: 'id_user',
+  referencedColumnName: 'id',})
   @ManyToOne(() => User, (userEntity) => userEntity.id)
   user: User
 
+  
   @BeforeInsert()
   beforeInsert() {
     this.creationDate = new Date()

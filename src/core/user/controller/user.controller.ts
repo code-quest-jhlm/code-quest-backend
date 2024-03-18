@@ -13,7 +13,7 @@ import { UpdateUserDto } from '../dto/update-user.dto'
 import { Role } from 'src/common/constants'
 import { Auth } from 'src/core/auth/decorators/auth.decorator'
 
-@Auth(Role.ADMIN)
+//@Auth(Role.ADMIN)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}

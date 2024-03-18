@@ -12,27 +12,31 @@ export class DrawController {
   constructor(private readonly drawService: DrawService) {}
 
   @Post()
-  @Auth(ValidRoles.superUser)
+  @Auth(ValidRoles.superUser, ValidRoles.admin)
   create(@Body() createDrawDto: CreateDrawDto) {
     return this.drawService.create(createDrawDto);
   }
 
   @Get()
+  @Auth(ValidRoles.superUser, ValidRoles.admin)
   findAll() {
     return this.drawService.findAll();
   }
 
   @Get(':id')
+  @Auth(ValidRoles.superUser, ValidRoles.admin)
   findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.drawService.findOne(id);
   }
 
   @Patch(':id')
+  @Auth(ValidRoles.superUser, ValidRoles.admin)
   update(@Param('id', ParseUUIDPipe) id: string, @Body() updateDrawDto: UpdateDrawDto) {
     return this.drawService.update(id, updateDrawDto);
   }
 
   @Delete(':id')
+  @Auth(ValidRoles.superUser, ValidRoles.admin)
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.drawService.remove(id);
   }

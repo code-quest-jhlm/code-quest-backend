@@ -32,7 +32,7 @@ export class DrawService {
   }
 
   async update(id: string, updateDrawDto: UpdateDrawDto) {
-    await this.drawRepository.update(id, updateDrawDto)
+    await this.drawRepository.save({ id, ...updateDrawDto })
     return await this.drawRepository.findOne({
       where: { id: Equal(id) },
     })

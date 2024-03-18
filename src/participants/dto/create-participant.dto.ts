@@ -13,4 +13,9 @@ export class CreateParticipantDto {
   @MinLength(1)
   @IsOptional()
   avatar: string
+
+  @IsString()
+  @MinLength(1)
+  @IsOptional()
+  drawId: string
 }

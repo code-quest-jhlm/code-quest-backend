@@ -10,6 +10,7 @@ import { AuthModule } from '../auth/auth.module';
     Draw
   ]), AuthModule],
   controllers: [DrawController],
-  providers: [DrawService]
+  providers: [DrawService],
+  exports: [DrawService]
 })
 export class DrawModule {}

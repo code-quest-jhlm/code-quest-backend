@@ -15,12 +15,18 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
+    "setup": "npm run migrations:clean && npm run schema:drop && npm run migrations:generate database/migrations/init && npm run migrations:run && npm run seeds:run",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "typeorm-ts-node-commonjs",
-    "migrations:generate": "npm run typeorm migration:generate -- -d ormconfig-default.ts -p src/database/migrations/initial",
-    "migrations:run": "npm run typeorm migration:run -- -d ormconfig-default.ts"
+    "migrations:clean": "rimraf database/migrations/*",
+    "migrations:generate": "npm run typeorm -- migration:generate -d ormconfig-default.ts",
+    "migrations:run": "npm run typeorm -- migration:run -d ormconfig-default.ts",
+    "migrations:revert": "npm run typeorm -- migration:revert -d ormconfig-default.ts",
+    "schema:drop": "npm run typeorm -- schema:drop -d ormconfig-default.ts",
+    "seeds:create": "npm run typeorm -- migration:create",
+    "seeds:run": "npm run typeorm -- migration:run -d ormconfig-seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.3",

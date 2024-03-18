@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsBoolean, IsString } from "class-validator";
+import { IsBoolean, IsString, IsNumber, IsArray } from "class-validator";
 
 export class CreateDrawDto {
   @ApiProperty()
@@ -13,4 +13,12 @@ export class CreateDrawDto {
   @ApiProperty()
   @IsBoolean()
   readonly state: boolean
+
+  @ApiProperty()
+  @IsNumber()
+  readonly totalWinners: number
+
+  @ApiProperty()
+  @IsArray()
+  readonly awards: string[]
 }

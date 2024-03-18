@@ -25,6 +25,15 @@ export class Draw {
   })
   state: boolean
 
+  @Column({ nullable: true })
+  totalWinners: number
+
+  @Column('text', {
+    array: true,
+    nullable: true
+  })
+  awards: string[]
+
   @CreateDateColumn()
   drawDate: Date
 

@@ -21,6 +21,8 @@ interface SeedDraw {
     title: string
     description: string
     state: boolean
+    totalWinners: number
+    awards: string[]
     participants: SeedParticipants[]
 }
 
@@ -75,7 +77,9 @@ export const initialData: SeedData = {
                     discordId: '398335713860648969',
                     avatar: 'https://discord.com/assets/c722e74f644b4a758b11.png'
                 }
-            ]
+            ],
+            totalWinners: 3,
+            awards: ['uno', 'dos']
         }
     ]
 }

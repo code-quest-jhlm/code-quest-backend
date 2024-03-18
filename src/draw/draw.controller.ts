@@ -24,7 +24,6 @@ export class DrawController {
   }
 
   @Get(':id')
-  @Auth(ValidRoles.superUser, ValidRoles.admin)
   findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.drawService.findOne(id);
   }

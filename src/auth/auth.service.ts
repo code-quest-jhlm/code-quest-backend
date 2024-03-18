@@ -38,7 +38,6 @@ export class AuthService {
       return {
         ...user,
       };
-      // TODO: Retornar el JWT de acceso
 
     } catch (error) {
       this.handleDBErrors(error);
@@ -52,7 +51,7 @@ export class AuthService {
 
     const user = await this.userRepository.findOne({
       where: { username },
-      select: { email: true, id: true, fullName: true, username: true } //! OJO!
+      select: { email: true, id: true, fullName: true, username: true, password: true }
     });
 
     if (!user)

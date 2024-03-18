@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, Res } from '@nestjs/common'
+import { Controller, Get, Param, Post, Req, Res } from '@nestjs/common'
 import { Request, Response } from 'express'
 import axios from 'axios'
 
@@ -6,14 +6,14 @@ import axios from 'axios'
 export class DiscordController {
   private refreshToken: string
 
-  @Get('login')
-  login(@Res() res: Response) {
+  @Get('login/:id')
+  login(@Res() res: Response, @Param('id') sorteoId: string) {
     res.redirect(
       `https://discord.com/api/oauth2/authorize?client_id=${
         process.env.DISCORD_CLIENT_ID
       }&redirect_uri=${encodeURIComponent(
         process.env.DISCORD_REDIRECT_URL
-      )}&response_type=code&scope=identify%20email`
+      )}&response_type=code&scope=identify%20email&state=${sorteoId}`
     )
   }
 
@@ -23,6 +23,7 @@ export class DiscordController {
     console.log(process.env.DISCORD_CLIENT_SECRET)
     console.log(process.env.DISCORD_REDIRECT_URL)
     const code = req.query.code
+    const sorteoId = req.query.state
     const data = {
       client_id: process.env.DISCORD_CLIENT_ID,
       client_secret: process.env.DISCORD_CLIENT_SECRET,
@@ -42,7 +43,7 @@ export class DiscordController {
     )
     this.refreshToken = response.data.refresh_token
     res.redirect(
-      `http://localhost:3000/api/discord/welcome?token=${response.data.access_token}`
+      `http://localhost:3000/api/discord/welcome/sorteo/${sorteoId}?token=${response.data.access_token}`
     )
   }
 
@@ -69,8 +70,8 @@ export class DiscordController {
     res.send(`New access token: ${response.data.access_token}`)
   }
 
-  @Get('welcome')
-  async welcome(@Req() req: Request, @Res() res: Response) {
+  @Get('welcome/sorteo/:id')
+  async welcome(@Req() req: Request, @Res() res: Response, @Param('id') id: string) {
     const token = req.query.token
     const response = await axios.get('https://discord.com/api/users/@me', {
       headers: {
@@ -88,8 +89,9 @@ export class DiscordController {
     console.log('data', response.data)
     console.log('servers', servers.data)
     console.log('refresh_token', this.refreshToken)
-    res.send(`Welcome ${response.data.username}!`)
+    res.send(`Welcome ${response.data.username} sorteo: ${id}!`)
   }
+  //Solo para obtener los servidores de fomra separada
   @Get('guilds')
   async guilds(@Req() req: Request, @Res() res: Response) {
     const token = req.query.token

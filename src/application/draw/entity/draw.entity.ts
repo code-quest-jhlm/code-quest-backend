@@ -48,6 +48,16 @@ export class Draw {
   })
   state: string
 
+  @Column({
+    name: 'id_user'
+  })
+  idUser: string
+
   @ManyToOne(() => User, (userEntity) => userEntity.id)
-  id_user: User
+  user: User
+
+  @BeforeInsert()
+  beforeInsert() {
+    this.creationDate = new Date()
+  }
 }

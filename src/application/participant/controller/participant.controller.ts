@@ -5,7 +5,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Auth } from 'src/core/auth/decorators/auth.decorator'
 import { Role } from 'src/common/constants'
 
-//@Auth(Role.ADMIN)
+@Auth(Role.ADMIN)
 @Controller('/v1/participant')
 @ApiTags('Partipantes')
 export class ParticipantController {

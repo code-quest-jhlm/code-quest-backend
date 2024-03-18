@@ -21,6 +21,12 @@ export class ParticipantsController {
     return this.participantsService.findAll();
   }
 
+  @Get('draw/:id')
+  @Auth(ValidRoles.superUser, ValidRoles.admin)
+  findByDraw(@Param('id') id: string) {
+    return this.participantsService.findByDraw(id);
+  }
+
   @Get(':id')
   @Auth(ValidRoles.superUser, ValidRoles.admin)
   findOne(@Param('id') id: string) {

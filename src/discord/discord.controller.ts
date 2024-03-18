@@ -13,19 +13,16 @@ export class DiscordController {
   ) {}
   @Get('login/:id')
   login(@Res() res: Response, @Param('id') drawId: string) {
-    res.redirect(
-      `https://discord.com/api/oauth2/authorize?client_id=${this.configService.get('DISCORD_CLIENT_ID')
-      }&redirect_uri=${encodeURIComponent(
-        this.configService.get('DISCORD_REDIRECT_URL')
-      )}&response_type=code&scope=identify%20email%20guilds&state=${drawId}`
-    )
+    res.json({
+      discordUrl: `https://discord.com/api/oauth2/authorize?client_id=${this.configService.get('DISCORD_CLIENT_ID')
+        }&redirect_uri=${encodeURIComponent(
+          this.configService.get('DISCORD_REDIRECT_URL')
+        )}&response_type=code&scope=identify%20email%20guilds&state=${drawId}`
+    })
   }
 
   @Get()
   async redirect(@Req() req: Request, @Res() res: Response) {
-    console.log(process.env.DISCORD_CLIENT_ID)
-    console.log(process.env.DISCORD_CLIENT_SECRET)
-    console.log(process.env.DISCORD_REDIRECT_URL)
     const code = req.query.code
     const drawId = req.query.state
     const data = {
@@ -70,25 +67,28 @@ export class DiscordController {
         },
       }
     )
-    console.log('data', response.data)
-    console.log('servers', servers.data)
-    console.log(this.configService.get('SERVER_DISCORD_ID'))
     const serverExist = servers.data.find(
       (server) => server.id === this.configService.get('SERVER_DISCORD_ID')
     )
     if (serverExist) {
-      await this.participantService.create({
+      const drawResponse = await this.participantService.create({
         avatar: `https://cdn.discordapp.com/avatars/${response.data.id}/${response.data.avatar}.webp?size=80`,
         discordId: response.data.id,
         name: response.data.username,
         drawId: id
       })
+      if (drawResponse.isEnrolled) {
+        res.redirect(
+          `${this.configService.get('FRONTEND_URL')}/draw/${id}?enroll=0`
+        )
+        return;
+      }
       res.redirect(
-        `${this.configService.get('FRONTEND_URL')}/draw-participant?enroll=1`
+        `${this.configService.get('FRONTEND_URL')}/draw/${id}?enroll=1`
       )
     } else {
       res.redirect(
-        `${this.configService.get('FRONTEND_URL')}/draw-participant?enroll=0`
+        `${this.configService.get('FRONTEND_URL')}/draw/${id}?enroll=0`
       )
     }
   }

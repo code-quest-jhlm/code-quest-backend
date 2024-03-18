@@ -16,13 +16,22 @@ export class ParticipantsService {
   async create(createParticipantDto: CreateParticipantDto) {
     const { avatar, discordId, drawId, name } = createParticipantDto
     const draw = await this.findByDraw(drawId)
+    const found = draw.participants.find((p) => p.discordId === discordId)
+    if (found) {
+      return {
+        isEnrolled: true
+      }
+    }
     const participant = this.participantRepository.create({
       avatar,
       discordId,
       name,
       draw
     })
-    return this.participantRepository.save(participant);
+    await this.participantRepository.save(participant);
+    return {
+      isEnrolled: false
+    }
   }
 
   async findByDraw(drawId: string) {
